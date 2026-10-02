@@ -95,6 +95,10 @@ Probado con una Vita **EUR (`PCSB00245`)** y saves de PC en **español**: la pan
 
 Comprobado además con saves reales: los `.bin` convertidos coinciden byte a byte con los de otra conversión anterior, salvo el checksum y el flag de dificultad.
 
+## Licencia
+
+[MIT](LICENSE).
+
 ## Créditos
 
 El formato de los saves y los offsets (`0x15120`, `0x190CC`, el checksum de `0x3165C`, el contenido de `sdslot.dat`) vienen de [zarroboogs/p4g-saveconv](https://github.com/zarroboogs/p4g-saveconv). Ese repositorio no declara licencia.
