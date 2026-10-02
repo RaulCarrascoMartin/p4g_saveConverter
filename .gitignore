@@ -1,0 +1,10 @@
+# Saves personales y copias de seguridad: no se suben
+P4GoldenPC/
+P4GoldenPC_*/
+P4GVita/
+backup_vita_*/
+*_conv/
+*.bin
+*.binslot
+sdslot.dat
+.DS_Store
