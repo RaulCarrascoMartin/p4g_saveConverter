@@ -42,17 +42,61 @@ Crea `<carpeta>_conv/` con los `.bin`, `system.bin` y `sce_sys/sdslot.dat`.
 | `--custom-diff {disable,enable,keep}` | Flag del menú de dificultad personalizada (`disable` por defecto, ver más abajo). |
 | `-o, --output RUTA` | Carpeta de salida (por defecto `<carpeta>_conv`). |
 
-### Copiar los saves a la Vita
+## Cómo usar los saves en la PS Vita
 
-> **Haz una copia de seguridad antes.** Los slots que conviertas sobrescriben los que ya tengas con el mismo número.
+### Antes de empezar
 
-1. Pasa la carpeta de salida a la Vita (por FTP o USB) a una carpeta temporal, por ejemplo `ux0:/data/p4g_import/`.
-2. En **VitaShell** entra en esa carpeta: `△` → **Mark all** → `△` → **Copy**.
-3. Ve a `ux0:/user/00/savedata/`, deja el cursor sobre `PCSE00120` (USA) o `PCSB00245` (EUR) y pulsa `△` → **Open decrypted**. Si la carpeta no existe, abre el juego y guarda una vez.
-4. Dentro, `△` → **Paste** y acepta reemplazar.
-5. Abre el juego → **Load game**.
+- La Vita debe tener **CFW** (HENkaku/Enso) y **VitaShell** instalado.
+- El juego tiene que estar instalado y **haber guardado al menos una vez** en la Vita. Así existe la carpeta `ux0:/user/00/savedata/<ID>`, donde `<ID>` es `PCSE00120` (USA) o `PCSB00245` (EUR). Si usas otro perfil de usuario, cambia `00`.
+- El Mac/PC y la Vita deben estar en la misma red wifi si vas a usar FTP.
 
-**No copies por FTP directamente a `savedata/<ID>`, ni restaures con Save Manager.** Esa carpeta está cifrada (PFS) y, copiando así, el juego muestra *No data* en todos los slots. Hay que usar "Open decrypted".
+### 1. Haz una copia de seguridad
+
+Los slots que conviertas **sobrescriben** los que ya tengas con el mismo número. Antes de tocar nada, copia a tu ordenador la carpeta completa `ux0:/user/00/savedata/<ID>` de la Vita (por FTP o USB). Si algo sale mal, podrás restaurarla (ver el último apartado).
+
+### 2. Pasa los archivos convertidos a la Vita
+
+Copia el contenido de la carpeta de salida (`<carpeta>_conv`: los `.bin`, `system.bin` y `sce_sys/sdslot.dat`) a una carpeta **temporal** de la Vita, por ejemplo `ux0:/data/p4g_import/`. Mantén la estructura: `sdslot.dat` dentro de `sce_sys`.
+
+Por FTP:
+1. Abre **VitaShell** en la Vita y pulsa `SELECT` para iniciar el servidor FTP. La pantalla muestra la IP y el puerto (normalmente `1337`).
+2. Conéctate desde el ordenador con un cliente FTP (Cyberduck, FileZilla, WinSCP…) a esa IP y puerto, sin usuario ni contraseña.
+3. Sube la carpeta a `ux0:/data/p4g_import/`.
+4. Cierra el servidor FTP (`SELECT` otra vez) antes de seguir.
+
+Por USB: en VitaShell pulsa `SELECT` y elige el modo USB, o conecta la tarjeta de memoria al ordenador.
+
+### 3. Pégalos en el save con "Open decrypted"
+
+Este es el paso clave. La carpeta de save está cifrada: hay que montarla descifrada para que el juego vea los archivos.
+
+1. En VitaShell entra en `ux0:/data/p4g_import/`.
+2. Pulsa `△` → **Mark all** → `△` → **Copy**.
+3. Ve a `ux0:/user/00/savedata/`.
+4. Deja el cursor sobre la carpeta del juego (`PCSE00120` o `PCSB00245`) y pulsa `△` → **Open decrypted**.
+5. Dentro, pulsa `△` → **Paste** y acepta **reemplazar** los archivos existentes. `sce_sys` se mezcla con la que ya hay: no se pierden los demás archivos.
+
+> **No copies por FTP directamente a `savedata/<ID>`, ni restaures con Save Manager.** Copiando así, el juego muestra *No data* en todos los slots.
+
+### 4. Juega
+
+1. Cierra VitaShell y abre Persona 4 Golden.
+2. Entra en **Load game**. Deberías ver tus slots de PC.
+3. Carga el slot que quieras y comprueba que la partida arranca.
+
+Al guardar por primera vez en la Vita, el juego reescribe el texto del slot en su formato habitual.
+
+Cuando todo funcione, puedes borrar `ux0:/data/p4g_import/`.
+
+### Si algo falla
+
+| Síntoma | Causa probable |
+|---|---|
+| *No data* en todos los slots | Copiaste por FTP o con Save Manager en lugar de pegar con "Open decrypted". |
+| El juego se congela al entrar en **Load game** | Texto del slot en un idioma que la Vita no acepta. Usa la versión actual del conversor, que lo reescribe en inglés. |
+| No existe `ux0:/user/00/savedata/<ID>` | Abre el juego y guarda una partida para crearla. Revisa también otros perfiles (`ux0:/user/`) y el ID de tu versión. |
+| No puedes pegar dentro de la carpeta descifrada | Comprueba que entraste con "Open decrypted" y que la carpeta de origen es la correcta. |
+| Quieres volver atrás | Restaura tu copia de seguridad: copia sus archivos a `ux0:/data/`, y pégalos igual que en el paso 3. |
 
 ## Diferencias con el conversor de zarroboogs
 
